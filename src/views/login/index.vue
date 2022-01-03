@@ -1,36 +1,98 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form
+      ref="loginFormRef"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+    >
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
-      <el-form-item>
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon="user" />
         </span>
-        <el-input placeholder="username" name="username" type="text"></el-input>
+        <el-input
+          v-model="loginForm.username"
+          placeholder="username"
+          name="username"
+          type="text"
+        />
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon="password" />
         </span>
-        <el-input placeholder="password" name="password"></el-input>
+        <el-input
+          v-model="loginForm.password"
+          :type="passwordType"
+          name="password"
+          placeholder="password"
+        />
         <span class="show-pwd">
-          <el-icon>
-            <svg-icon icon="eye" />
-          </el-icon>
+          <span class="svg-container" @click="onChangePwdType">
+            <svg-icon
+              :icon="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
+          </span>
         </span>
       </el-form-item>
 
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
-        >登录</el-button
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
+        @click="handleLogin"
       >
+        登录
+      </el-button>
     </el-form>
   </div>
 </template>
 
 <script setup>
-import {} from 'vue'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { validatePassword } from './rules'
+
+const loginForm = ref({
+  username: 'super-admin',
+  password: '123456'
+})
+const loginRules = ref({
+  username: [{ required: true, trigger: 'blur', message: '用户名为必填项' }],
+  password: [{ required: true, trigger: 'blur', validator: validatePassword() }]
+})
+
+const passwordType = ref('password')
+const onChangePwdType = () => {
+  if (passwordType.value === 'password') {
+    passwordType.value = 'text'
+  } else {
+    passwordType.value = 'password'
+  }
+}
+
+// 点击登录
+const loginFormRef = ref(null)
+const loading = ref(false)
+const store = useStore()
+const handleLogin = () => {
+  loginFormRef.value.validate((valid) => {
+    if (!valid) return
+    loading.value = true
+    store
+      .dispatch('user/login', loginForm.value)
+      .then(() => {
+        loading.value = false
+      })
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -97,7 +159,7 @@ $cursor: #fff;
   .show-pwd {
     position: absolute;
     right: 10px;
-    top: 7px;
+    top: 3px;
     font-size: 16px;
     color: $dark_gray;
     cursor: pointer;
