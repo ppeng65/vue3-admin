@@ -13,6 +13,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       config.headers.Authorization = `Bearer ${store.getters.token}`
     }
+    config.headers.icode = '5b068d6f335c95f5e1fa2de691e201fe'
     return config
   },
   (error) => {
