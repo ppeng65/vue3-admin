@@ -9,6 +9,8 @@ import '@/styles/index.scss'
 import installIcon from '@/icons'
 // 路由守卫
 import '@/permission'
+// MOCK 数据
+import './mock/index'
 
 const app = createApp(App)
 installElementPlus(app)

@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
       next('/')
     } else {
       if (!store.getters.hasUserInfo) {
-        // store.dispatch('user/getUserInfo')
+        store.dispatch('user/getUserInfo')
       }
       next()
     }

@@ -7,7 +7,7 @@ import { TOKEN } from '../../constant'
 export default {
   namespaced: true,
   state: () => ({
-    token: getItem(TOKEN) || '123123',
+    token: getItem(TOKEN) || '',
     userInfo: {}
   }),
   mutations: {
