@@ -9,18 +9,48 @@ export default {
     title: 'article',
     icon: 'article'
   },
-  children: [{
-    path: '/article/ranking',
-    component: () => import(/* webpackChunkName: "article-ranking" */ '../../views/article-ranking/index'),
-    meta: {
-      title: 'articleRanking',
-      icon: 'article-ranking'
+  children: [
+    {
+      path: '/article/ranking',
+      component: () =>
+        import(
+          /* webpackChunkName: "article-ranking" */ '../../views/article-ranking/index'
+        ),
+      meta: {
+        title: 'articleRanking',
+        icon: 'article-ranking'
+      }
+    },
+    {
+      path: '/article/:id',
+      component: () =>
+        import(
+          /* webpackChunkName: "article-ranking" */ '../../views/article-detail/index'
+        ),
+      meta: {
+        title: 'articleDetail'
+      }
+    },
+    {
+      path: '/article/create',
+      component: () =>
+        import(
+          /* webpackChunkName: "article-create" */ '../../views/article-create/index'
+        ),
+      meta: {
+        title: 'articleCreate',
+        icon: 'article-create'
+      }
+    },
+    {
+      path: '/article/editor/:id',
+      component: () =>
+        import(
+          /* webpackChunkName: "article-create" */ '../../views/article-create/index'
+        ),
+      meta: {
+        title: 'articleEditor'
+      }
     }
-  }, {
-    path: '/article/:id',
-    component: () => import(/* webpackChunkName: "article-ranking" */ '../../views/article-detail/index'),
-    meta: {
-      title: 'articleDetail'
-    }
-  }]
+  ]
 }

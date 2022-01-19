@@ -1,9 +1,9 @@
 import layout from '../../layout'
 
 export default {
-  path: '/role',
+  path: '/user',
   component: layout,
-  redirect: '/role/list',
+  redirect: '/user/manage',
   name: 'roleList',
   meta: {
     title: 'user',
@@ -11,8 +11,11 @@ export default {
   },
   children: [
     {
-      path: '/role/list',
-      component: () => import(/* webpackChunkName: "role-list" */ '../../views/role-list/index'),
+      path: '/user/role',
+      component: () =>
+        import(
+          /* webpackChunkName: "role-list" */ '../../views/role-list/index'
+        ),
       meta: {
         title: 'roleList',
         icon: 'role'

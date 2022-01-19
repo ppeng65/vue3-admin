@@ -3,14 +3,12 @@ import UserManageRouter from './modules/user-manage'
 import RoleListRouter from './modules/role-list'
 import PermissionListRouter from './modules/permission-list'
 import ArticleRouter from './modules/article'
-import ArticleCreaterRouter from './modules/article-create'
 
 const privateRoutes = [
   UserManageRouter,
   RoleListRouter,
   PermissionListRouter,
-  ArticleRouter,
-  ArticleCreaterRouter
+  ArticleRouter
 ]
 
 /**
@@ -24,8 +22,20 @@ const publicRoutes = [
   },
   {
     path: '/',
-    name: 'Layout',
-    component: () => import('@/layout')
+    redirect: '/profile',
+    component: () => import('@/layout'),
+    children: [
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () =>
+          import(/* webpackChunkName: "profile" */ '@/views/profile/index'),
+        meta: {
+          title: 'profile',
+          icon: 'el-icon-user'
+        }
+      }
+    ]
   }
 ]
 
